@@ -11,9 +11,9 @@ def conn():
                                 password=os.environ['password'])
         cur = conn.cursor()
         
-def backup():
+def backup_files():
     client = boto3.client('rds')
-    conn = conn()
+    connect = conn()
     os.system("psql -l")
     os.system('psql -At -c "SELECT datname FROM pg_database WHERE datistemplate = false;" -d postgres > test.txt')
     DATE_FORMAT = "%m-%d-%H"
@@ -42,7 +42,6 @@ if __name__ == "__main__":
     
     
 def lambda_handler(event, context):
-    conn=conn()
-    backup=backup()
+    connect=conn()
+    backup=backup_files()
     upload=upload_files()
-    
